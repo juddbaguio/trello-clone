@@ -16,6 +16,11 @@ export const NewItemForm = ({ onAdd }: NewItemFormProps) => {
              ref={inputRef}
              value={text}
              onChange={(e) => setText(e.target.value)}
+             onKeyPress={(e) => {
+                 if(e.key === 'Enter' && text !== '') {
+                     onAdd(text)
+                 }
+             }}
             />
             <NewItembutton onClick={() => onAdd(text)}>
                     Create

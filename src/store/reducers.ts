@@ -47,25 +47,20 @@ export enum ActionType {
 export const reducer = (state=initialState, action: Action) => {
     switch(action.type){
         case "TO DO":
-            console.log("The action is", action);
             let Modified_TODO_State: AppState = state;
             Modified_TODO_State.lists[0].tasks.push(action.payload);
-
-            return {...Modified_TODO_State}
+            return {...state, lists: [...Modified_TODO_State.lists]}
         case "IN PROGRESS":
-            console.log("The action is", action);
             let Modified_IP_State: AppState = state;
             Modified_IP_State.lists[1].tasks.push(action.payload);
 
-            return {...Modified_IP_State}
+            return {...state, lists: [...Modified_IP_State.lists]}
         case "DONE":
-            console.log("The action is", action);
             let Modified_DONE_State: AppState = state;
-            Modified_DONE_State.lists[1].tasks.push(action.payload);
+            Modified_DONE_State.lists[2].tasks.push(action.payload);
 
-            return {...Modified_DONE_State}
+            return {...state, lists: [...Modified_DONE_State.lists]}
         default:
-            console.log(action.type);
             return state
     }
 }
