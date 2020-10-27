@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { AppStateProvider } from './AppStateContext';
+import { Provider } from 'react-redux';
+import { store } from './store/storeConfiguration';
 
 ReactDOM.render(
-  <AppStateProvider>
+  <Provider store={store}>
     <App />
-  </AppStateProvider>,
+  </Provider>,
   document.getElementById('root')
 );
 

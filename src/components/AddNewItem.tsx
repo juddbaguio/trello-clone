@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
-import { useAppState } from '../AppStateContext';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { DispatchActionType, PayloadType } from '../store/reducers';
 import { AddItemButton } from '../styles';
 import { NewItemForm } from './NewItemForm';
 
 interface AddNewItemProps {
-    onAdd(text: string): void
     toggleButtonText: string
     dark?: boolean
     column?: string
+    ADD_ITEM(column: string, payload: PayloadType): DispatchActionType
 }
 
-export const AddNewItem = (props: AddNewItemProps) => {
+const AddNewItem = (props: AddNewItemProps) => {
     const [showForm, setShowForm] = useState(false);
-    const { toggleButtonText, dark, column } = props;
-    const {state, dispatch} = useAppState();
+    const { toggleButtonText, dark, column, ADD_ITEM } = props;
     if(showForm) {
         return(
             <NewItemForm
              onAdd={(text) => {
-                // onAdd(text)
-                 dispatch({type: column!, payload: text})
+                 console.log(column);
+                ADD_ITEM(column!, {id: `${Math.random()}`, text})
                  setShowForm(false)
-                 console.log(state);
              }}
             />
         )
@@ -33,3 +33,11 @@ export const AddNewItem = (props: AddNewItemProps) => {
         </AddItemButton>
     )
 }
+
+const mapDispatchToProps = (dispatch: Dispatch<DispatchActionType>) => {
+    return {
+        ADD_ITEM: (column: string, payload:PayloadType) => dispatch({type: column, payload})
+    }
+}
+
+export default connect(null,mapDispatchToProps)(AddNewItem)
